@@ -28,17 +28,25 @@ app.get('/WeatherClock/CollectWeatherForecastData',(req,res) => {
 app.get('/Naming/SearchName',(req,res) => {
   console.log(req.query.keyword);
   let keyword = req.query.keyword;
-
-  csv().fromFile(conf.naming).then((rows)=>{
-    rows = rows.filter((row) => {
-      let keys = Object.keys(row);
-      for(let i = 0; i<keys.length; i++){
-        if(row[keys[i]].indexOf(keyword) != -1){
-          return row;
-        }
-      }
-    })
-    res.send(rows);
-  }) 
-
+  asyncfunc(keyword,res);
 });
+
+// csv読み込みが非同期なのでawaitを使うために非同期関数を定義する
+const asyncfunc = async(keyword,res) => {
+  let retJson = [];
+  for(const csvType of conf.availableCsvType){
+    await csv().fromFile(conf[csvType]).then((rows)=>{
+      // 検索条件を含む行を抽出
+      rows = rows.filter((row) => {
+        let keys = Object.keys(row);
+        for(let i = 0; i<keys.length; i++){
+          if(row[keys[i]].indexOf(keyword) != -1){
+            return row["辞書種別"] = csvType;
+          }
+        }
+      })
+      retJson = retJson.concat(rows);
+    })
+  }
+  res.send(retJson);
+}

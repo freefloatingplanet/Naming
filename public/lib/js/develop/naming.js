@@ -6,6 +6,11 @@ function init(){
 		let keyword = $('#searchKeyWord').val();
 		searchName(keyword);
 	})
+	$('#searchButton').click(function(){
+		let keyword = $('#searchKeyWord').val();
+		searchName(keyword);
+	})
+
 }
 
 function searchName(keyword){

@@ -1,4 +1,6 @@
 {
     "port":8081,
-    "naming":"./csv/Naming.csv"
+    "availableCsvType":["命名規則","データベース"],
+    "命名規則":"./csv/Naming.csv",
+    "データベース":"./csv/DB.csv"
 }
