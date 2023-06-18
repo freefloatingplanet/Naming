@@ -14,6 +14,12 @@ function init(){
 }
 
 function searchName(keyword){
+	$("#searchResult").text("");
+	$("#records").html("Showing: <b>0</b> result");
+	if(!keyword){
+		return;
+	}
+
 	$("#searchResult").text("検索中...");
 
 	$.ajax({
