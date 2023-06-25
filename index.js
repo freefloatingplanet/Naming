@@ -33,7 +33,9 @@ app.get('/Naming/SearchName',(req,res) => {
 
 // csv読み込みが非同期なのでawaitを使うために非同期関数を定義する
 const asyncfunc = async(keyword,res) => {
-  let retJson = [];
+  let retJson = {};
+  retJson.data = [];
+  retJson.conf = conf;
   let rowCount = 0;
   for(const csvType of conf.availableCsvType){
     await csv().fromFile(conf[csvType]).then((rows)=>{
@@ -60,7 +62,7 @@ const asyncfunc = async(keyword,res) => {
           }          
         }
       })
-      retJson = retJson.concat(rows);
+      retJson.data = retJson.data.concat(rows);
     })
   }
   res.send(retJson);
