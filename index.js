@@ -36,13 +36,19 @@ const asyncfunc = async(keyword,res) => {
   let retJson = [];
   for(const csvType of conf.availableCsvType){
     await csv().fromFile(conf[csvType]).then((rows)=>{
+      // 検索対象のキーを選出
+      let keys = Object.keys(rows[0]).filter((key) => {
+        if(conf.searchKeys.includes(key)){
+          return key
+        }
+      });
       // 検索条件を含む行を抽出
       rows = rows.filter((row) => {
-        let keys = Object.keys(row);
-        for(let i = 0; i<keys.length; i++){
-          if(row[keys[i]].indexOf(keyword) != -1){
+        //let keys = Object.keys(row);
+        for(let key of keys){
+          if(row[key].indexOf(keyword) != -1){
             return row["辞書種別"] = csvType;
-          }
+          }          
         }
       })
       retJson = retJson.concat(rows);
