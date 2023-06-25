@@ -86,7 +86,7 @@ const highlightWord = function(eleHtml,word){
 	let ret = eleHtml;
 	if(word){
 		let searchString = '(' + word + ')';
-		let regExp = new RegExp( searchString, "g");
+		let regExp = new RegExp( searchString, "gi");
 		let replaceString = '<span style="background-color:#ffcc99">$1</span>';
 		let resultHtml = eleHtml.replace(regExp, replaceString);
 		ret = resultHtml;
