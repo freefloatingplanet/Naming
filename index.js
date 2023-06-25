@@ -42,11 +42,15 @@ const asyncfunc = async(keyword,res) => {
           return key
         }
       });
+
+      // 大文字小文字区別しないフラグが有効ならuppercase
+      let ckeyword = conditionalToUpperCase(keyword,true);
+
       // 検索条件を含む行を抽出
       rows = rows.filter((row) => {
         //let keys = Object.keys(row);
         for(let key of keys){
-          if(row[key].indexOf(keyword) != -1){
+          if(conditionalToUpperCase(row[key],true).indexOf(ckeyword) != -1){
             return row["辞書種別"] = csvType;
           }          
         }
@@ -55,4 +59,12 @@ const asyncfunc = async(keyword,res) => {
     })
   }
   res.send(retJson);
+}
+
+const conditionalToUpperCase = function(word,isCaseInsensitive){
+  if(isCaseInsensitive){
+    return word.toUpperCase();
+  }else{
+    return word;
+  }
 }
