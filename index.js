@@ -34,6 +34,7 @@ app.get('/Naming/SearchName',(req,res) => {
 // csv読み込みが非同期なのでawaitを使うために非同期関数を定義する
 const asyncfunc = async(keyword,res) => {
   let retJson = [];
+  let rowCount = 0;
   for(const csvType of conf.availableCsvType){
     await csv().fromFile(conf[csvType]).then((rows)=>{
       // 検索対象のキーを選出
@@ -50,8 +51,12 @@ const asyncfunc = async(keyword,res) => {
       rows = rows.filter((row) => {
         //let keys = Object.keys(row);
         for(let key of keys){
-          if(conditionalToUpperCase(row[key],true).indexOf(ckeyword) != -1){
-            return row["辞書種別"] = csvType;
+          // 検索条件なしの場合は上限数まで全検索
+          if(!ckeyword || conditionalToUpperCase(row[key],true).indexOf(ckeyword) != -1){
+            if(rowCount < conf.limitCount){
+              rowCount += 1;
+              return row["辞書種別"] = csvType;
+            }
           }          
         }
       })

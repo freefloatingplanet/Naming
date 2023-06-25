@@ -1,5 +1,6 @@
 {
     "port":8081,
+    "limitCount":100,
     "searchKeys":["論理名","物理名","略称"],
     "availableCsvType":["命名規則","データベース"],
     "命名規則":"./csv/Naming.csv",

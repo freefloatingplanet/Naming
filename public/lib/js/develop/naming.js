@@ -1,24 +1,24 @@
 /**
  *
  */
-function init(){
+const init = function(){
 	$('#searchKeyWord').change(function(){
-		let keyword = $('#searchKeyWord').val();
-		searchName(keyword);
+		execSearch();
 	})
 	$('#searchButton').click(function(){
-		let keyword = $('#searchKeyWord').val();
-		searchName(keyword);
+		execSearch();
 	})
-
+	execSearch();
 }
 
-function searchName(keyword){
+const execSearch = function(){
+	let keyword = $('#searchKeyWord').val();
+	searchName(keyword);
+}
+
+const searchName = function(keyword){
 	$("#searchResult").text("");
 	$("#records").html("Showing: <b>0</b> result");
-	if(!keyword){
-		return;
-	}
 
 	$("#searchResult").text("検索中...");
 
